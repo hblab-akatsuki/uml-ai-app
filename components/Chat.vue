@@ -39,34 +39,16 @@
 <script>
 import axios from 'axios';
 // import { storeToRefs } from 'pinia'
-// import { useMessageStore } from "../store/message"
+import { useMessageStore } from "../store/message"
 
 export default {
   data() {
-    // const messageStore = useMessageStore()
+    const messageStore = useMessageStore()
     return {
-      messages: [
-      {
-        is_bot: true,
-        avatar: 'https://picsum.photos/200',
-        text: 'Hey, how are you?',
-      },
-      {
-        is_bot: false,
-        avatar: 'https://picsum.photos/200',
-        text: 'I\'m doing great! Thanks for asking.',
-      },
-      {
-        is_bot: true,
-        avatar: 'https://picsum.photos/200',
-        text: 'Glad to hear it.',
-      },
-    ],
-    // messages: this.$messageStore.messages,
-    newMessage: '',
-    isEmpty: true,
-    response: false,
-    //  messageStore: useMessageStore()
+      messages: messageStore.messages,
+      newMessage: '',
+      isEmpty: true,
+      response: false,
     }
   },
   methods: {

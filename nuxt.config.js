@@ -40,6 +40,8 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     "simple-code-editor/nuxt",
+    '@nuxtjs/composition-api/module',
+    '@pinia/nuxt',
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

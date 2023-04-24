@@ -19,7 +19,7 @@
 </template>
 <script>
 // import { defineComponent, ref } from 'vue';
-// import { useMessageStore } from "../store/message"
+import { useMessageStore } from "../store/message"
 export default ({
   data() {
     let id = 0
@@ -69,9 +69,9 @@ export default ({
     }
   },
   methods: {
-    // let messageStore = useMessageStore()
     addChat()  {
       console.log(1);
+      const messageStore = useMessageStore()
       messageStore.addMessage(
         true,
         'https://picsum.photos/200',
