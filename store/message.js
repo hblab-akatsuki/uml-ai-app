@@ -13,6 +13,7 @@ export const useMessageStore = defineStore({
         text,
       };
       this.messages.push(message);
+      
     },
   },
   getters: {

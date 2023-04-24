@@ -237,7 +237,7 @@ export default {
   .conversation {
     display: flex;
     flex-direction: column;
-    height: 80%;
+    height: 87%;
     overflow-y: auto;
     margin-bottom: 1rem;
   }

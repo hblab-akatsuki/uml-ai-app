@@ -1,5 +1,6 @@
 <template>
-  <div id="app">
+  <div id="app" class="header">
+    <img src="https://hblab.vn/wp-content/uploads/2020/05/xlogo-1.png.pagespeed.ic.cTE0lFw0V6.webp">
     <div class="box">
       <p><strong>Event Handler</strong></p>
       <div :class="{'active': toggleActive}" class="toggle_container">
@@ -36,7 +37,18 @@ export default {
 </script>
 <style src="@vueform/toggle/themes/default.css"></style>
 <style>
-
+.header {
+  display: flex;
+}
+.header img {
+  display: block;
+  -webkit-user-select: none;
+  margin-bottom: 30px;
+  background-color: hsl(0, 0%, 90%);
+  transition: background-color 300ms;
+  width: 200px;
+  height: 70px;
+}
 .box {
   text-align: center;
   margin-bottom: 30px;

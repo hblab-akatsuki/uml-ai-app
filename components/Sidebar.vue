@@ -1,20 +1,23 @@
 <template>
 	<div 
-    class="sidebar bottom-0 lg:left-0 p-2 w-[200px] text-center bg-gray-900 overflow-hidden hover:overflow-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100"
+    class="sidebar bottom-0 lg:left-0 p-2 w-[250px] text-center bg-gray-900"
   >
 		<div
       @click="addChat"
-      class="p-2.5 mt-3 flex items-center rounded-md px-4 bg-slate-400 duration-300 cursor-pointer hover:bg-blue-600 text-white"
+      class="new-chat p-2.5 mt-3 flex items-center rounded-md px-4 max-w-[200px] bg-slate-400 duration-300 cursor-pointer hover:bg-blue-600 text-white"
     >
 			<i class="fa fa-plus"></i>
 			<span class="text-[15px] ml-4 text-gray-200 font-bold">New Chat</span>
 		</div>
-		<div v-for="(chat, index) in chats" :key="`${index}chat`"
-			class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white"
-		>
-    <i class="fa fa-comment"></i>
-			<span class="text-[15px] ml-4 text-gray-200 font-bold break-normal">{{ chat.title }}</span>
-		</div>
+    <div class="history-chat overflow-hidden hover:overflow-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+        <div v-for="(chat, index) in chats" :key="`${index}chat`"
+        class="p-2.5 mt-3 flex items-center rounded-md max-w-[200px] px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white"
+      >
+      <i class="fa fa-comment"></i>
+        <span class="text-[15px] ml-4 text-gray-200 font-bold break-word truncate">{{ chat.title }}</span>
+      </div>
+    </div>
+		
 	</div>
 </template>
 <script>
@@ -25,6 +28,18 @@ export default ({
     let id = 0
     return {
       chats: [
+        {
+          id: ++id,
+          title: 'Hey, how are you? Hey, how are you?',
+        },
+        {
+          id: ++id,
+          title: 'Hey, how are you?',
+        },
+        {
+          id: ++id,
+          title: 'Hey, how are you?',
+        },
         {
           id: ++id,
           title: 'Hey, how are you?',
@@ -84,18 +99,23 @@ export default ({
 <style scoped>
 	.sidebar {
 		height: 100%;
-    /* overflow: hidden; */
 	}
-  /* .sidebar:hover {
-    overflow-y: scroll;
+  .new-chat {
+    height: 8%
+  }
+  .history-chat {
+    height: 92%
+  }
+  .history-chat::-webkit-scrollbar
+  {
+    width: 8px;
+    background-color: rgb(17 24 39 / var(--tw-bg-opacity));
   }
 
-  @keyframes background {
-    from {
-      background: pink;
-    }
-    to {
-      background: #c0d6ff;
-    }
-  } */
+  .history-chat::-webkit-scrollbar-thumb
+  {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #555;
+  }
 </style>

@@ -77,6 +77,7 @@ export default {
 body {
   height: 100vh;
   margin: 0;
+  overflow: hidden;
 }
 
 .options {
@@ -89,7 +90,7 @@ body {
 }
 
 .chat-form {
-  width: 400px;
+  width: 500px;
   margin: 0;
   height: 100%;
 }
