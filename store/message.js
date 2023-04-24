@@ -7,17 +7,17 @@ export const useMessageStore = defineStore({
   }),
   actions: {
     addMessage(is_bot, avatar, text) {
-      const message = {
-        is_bot,
-        avatar,
-        text,
-      };
-      this.messages.push(message);
+			const message = {
+				is_bot,
+				avatar,
+				text,
+			};
+				this.messages.push(message);
     },
-  },
-  getters: {
-    botMessages() {
-      return this.messages.filter(message => message.is_bot);
-    },
+		clearMessage() {
+			while(this.messages.length) {
+				this.messages.shift();
+			}
+		}
   },
 });

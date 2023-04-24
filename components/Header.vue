@@ -1,7 +1,7 @@
 <template>
-  <div id="app">
+  <div id="app" class="header">
+    <img src="../static/logo.png">
     <div class="box">
-      <p><strong>Event Handler</strong></p>
       <div :class="{'active': toggleActive}" class="toggle_container">
         <Toggle v-model="chatMode" on-label="Chat" off-label="Editor" @change="switchMode"/>
       </div>
@@ -36,24 +36,37 @@ export default {
 </script>
 <style src="@vueform/toggle/themes/default.css"></style>
 <style>
-
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+.header img {
+  display: block;
+  margin-top: 10px;
+  margin-left: 20px;
+  width: 150px;
+  height: 50px;
+}
 .box {
   text-align: center;
-  margin-bottom: 30px;
-  min-height: 300px;
 }
 .toggle {
-  width: 100px;
-  height: 50px;
+  width: 70px;
+  height: 30px;
+  margin-right: 20px;
+  margin-top: 20px;
 }
 
 .toggle .toggle-handle {
-  width: 50px;
-  height: 50px;
+  width: 30px;
+  height: 30px;
   border-radius: 100%;
 }
 
 .toggle_container.active {
   background: #e9ffef;
+}
+.toggle-container:focus {
+  box-shadow: none;
 }
 </style>
