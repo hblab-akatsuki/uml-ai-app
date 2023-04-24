@@ -69,15 +69,15 @@ export default ({
     }
   },
   methods: {
-    // const messageStore = useMessageStore()
-    // addChat()  {
-    //   console.log(1);
-    //   messageStore.addMessage(
-    //     true,
-    //     'https://picsum.photos/200',
-    //     'Hello, I am a ChatGPT!'
-    //   )
-    // };
+    // let messageStore = useMessageStore()
+    addChat()  {
+      console.log(1);
+      messageStore.addMessage(
+        true,
+        'https://picsum.photos/200',
+        'Hello, I am a ChatGPT!'
+      )
+    },
   },
 });
 </script>

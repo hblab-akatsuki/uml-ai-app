@@ -43,6 +43,7 @@ import axios from 'axios';
 
 export default {
   data() {
+    // const messageStore = useMessageStore()
     return {
       messages: [
       {
@@ -61,6 +62,7 @@ export default {
         text: 'Glad to hear it.',
       },
     ],
+    // messages: this.$messageStore.messages,
     newMessage: '',
     isEmpty: true,
     response: false,
