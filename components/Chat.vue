@@ -27,7 +27,7 @@
         </div>
       </div>
       <form class="message-form" @submit.prevent="addMessage">
-        <input v-model.trim="newMessage" type="text" placeholder="Type your message here...">
+        <textarea v-model.trim="newMessage" class="resize-none" placeholder="Type your message here..."></textarea>
         <button type="submit" :disabled="isEmpty" :class="{ 'bg-gray-500 text-white py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed': isEmpty }">
           <i class="fas fa-paper-plane"></i>
         </button>
@@ -38,7 +38,6 @@
 
 <script>
 import axios from 'axios';
-// import { storeToRefs } from 'pinia'
 import { useMessageStore } from "../store/message"
 
 export default {
@@ -102,7 +101,7 @@ export default {
     display: flex;
     flex-direction: column;
     height: 100%;
-    max-width: 768px;
+    width: 100%;
     margin: 0 auto;
   }
 
@@ -169,7 +168,7 @@ export default {
   }
 
   .message.received .avatar-container {
-    margin-left: 1rem;
+    margin-left: 5px;
   }
   /* CSS loading */
   .message.received .loader-container {
@@ -230,7 +229,7 @@ export default {
     word-break: break-word;
   }
   .message.sent .avatar-container {
-    margin-left: 1rem;
+    margin-left: 10px;
   }
 
   /* Conversation */
@@ -245,21 +244,23 @@ export default {
   .message-form {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    height: 3rem;
-    padding: 1rem;
+    align-items: flex-end;
+    height: 20%;
+    padding-left: 10px;
+    padding-right: 10px;
     background-color: #fff;
   }
 
-  .message-form input[type="text"] {
+  .message-form textarea {
     flex-grow: 1;
     border: none;
     outline: none;
     font-size: 1rem;
-    padding: 0.5rem 1rem;
+    padding: 2px 10px;
     margin-right: 1rem;
     border-radius: 1rem;
     box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 24px;
   }
 
   .message-form button[type="submit"] {
@@ -274,6 +275,7 @@ export default {
     width: 2.5rem;
     border-radius: 50%;
     cursor: pointer;
+    margin-bottom: 24px;
   }
 
   .message-form button[type="submit"]:hover {

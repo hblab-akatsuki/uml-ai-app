@@ -1,10 +1,13 @@
 <template>
   <div class="previewSvg">
-    <!-- <panZoom :selector="g" v-html="html" style="text-align: -webkit-center" @panstart="onPanStart">
-    </panZoom> -->
-    <div ref="myElement" class="my-element">
-      <!-- Your content here -->
+    <div class="download-png">
+      <button v-on:click="download" 
+        class="download mr-2 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-1 px-2 border border-blue-500 hover:border-transparent rounded">
+        <i class="fal fa-download mr-1"></i>
+        SVG
+      </button>
     </div>
+    <div ref="myElement" class="my-element" v-html="html"></div>
   </div>
 </template>
 
@@ -26,7 +29,8 @@ export default {
     this.getSvgData(this.data)
     const element = this.$refs.myElement
     const instance = this.$panzoom(element, {
-      // Panzoom options
+      minZoom: 0.5, 
+      maxZoom: 1.25
     })
   },
   watch: {
@@ -44,6 +48,22 @@ export default {
     encode(text) {
       return plantumlEncoder.encode(text);
     },
+    async download() {
+
+    }
   }
 }
 </script>
+<style>
+.previewSvg {
+  height: 100%;
+}
+.download-png {
+  display: flex;
+  justify-content: flex-end;
+}
+.download { 
+  margin-right: 20px;
+  margin-top: 10px;
+}
+</style>

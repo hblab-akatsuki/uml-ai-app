@@ -29,6 +29,7 @@ import Header from '../components/Header'
 import Sidebar from '../components/Sidebar'
 import Preview from '../components/Preview.vue'
 import Editor from '../components/Editor.vue'
+import { useMessageStore } from "../store/message"
 
 const text = `actor User
 participant "JWT Auth Server" as server
@@ -70,7 +71,15 @@ export default {
     updateCode(e) {
       this.codeData = e;
     }
-  }
+  },
+  mounted() {
+    const messageStore = useMessageStore()
+    messageStore.addMessage(
+      true,
+      'https://picsum.photos/200',
+      'Hello, I am a ChatGPT!'
+    )
+  },
 }
 </script>
 <style>
@@ -82,7 +91,7 @@ body {
 
 .options {
   height: 10vh;
-  background-color: brown;
+  background-color: #c2aeae2e;
 }
 
 .grid-content {
@@ -95,11 +104,11 @@ body {
   height: 100%;
 }
 .preview {
-  width: calc(100vw - 400px) !important;
+  width: calc(100vw - 650px) !important;
+  height: 100%;
   justify-content: center;
   align-content: center;
   align-items: center;
-  align-self: center;
 }
 </style>
 

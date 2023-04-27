@@ -1,17 +1,17 @@
 <template>
 	<div 
-    class="sidebar bottom-0 lg:left-0 p-2 w-[250px] text-center bg-gray-900"
+    class="sidebar bottom-0 lg:left-0 p-1 w-[250px] text-center bg-gray-900"
   >
 		<div
       @click="addChat"
-      class="new-chat p-2.5 mt-3 flex items-center rounded-md px-4 max-w-[200px] bg-slate-400 duration-300 cursor-pointer hover:bg-blue-600 text-white"
+      class="new-chat p-2.5 mt-3 flex items-center rounded-md px-4 max-w-[220px] bg-slate-400 duration-300 cursor-pointer hover:bg-blue-600 text-white"
     >
 			<i class="fa fa-plus"></i>
 			<span class="text-[15px] ml-4 text-gray-200 font-bold">New Chat</span>
 		</div>
     <div class="history-chat overflow-hidden hover:overflow-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
         <div v-for="(chat, index) in chats" :key="`${index}chat`"
-        class="p-2.5 mt-3 flex items-center rounded-md max-w-[200px] px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white"
+        class="p-1 mt-3 flex items-center rounded-md max-w-[220px] px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white"
       >
       <i class="fa fa-comment"></i>
         <span class="text-[15px] ml-4 text-gray-200 font-bold break-word truncate">{{ chat.title }}</span>
@@ -21,7 +21,7 @@
 	</div>
 </template>
 <script>
-// import { defineComponent, ref } from 'vue';
+
 import { useMessageStore } from "../store/message"
 export default ({
   data() {
@@ -85,8 +85,8 @@ export default ({
   },
   methods: {
     addChat()  {
-      console.log(1);
-      const messageStore = useMessageStore()
+      const messageStore = useMessageStore();
+      messageStore.clearMessage();
       messageStore.addMessage(
         true,
         'https://picsum.photos/200',

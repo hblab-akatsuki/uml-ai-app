@@ -4,7 +4,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'chat_uml_nuxt2',
+    title: 'ChatUML',
     htmlAttrs: {
       lang: 'en'
     },
