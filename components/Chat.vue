@@ -27,7 +27,16 @@
         </div>
       </div>
       <form class="message-form" @submit.prevent="addMessage">
-        <textarea v-model.trim="newMessage" class="resize-none" placeholder="Type your message here..."></textarea>
+        <textarea 
+          autocomplete="off"
+          v-model.trim="newMessage"
+          class="resize-none"
+          :style="{ height: textareaHeight }"
+          @input="updateTextareaHeight"
+          placeholder="Type your message here..."
+          @keydown="inputHandler"
+        >
+        </textarea>
         <button type="submit" :disabled="isEmpty" :class="{ 'bg-gray-500 text-white py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed': isEmpty }">
           <i class="fas fa-paper-plane"></i>
         </button>
@@ -48,20 +57,29 @@ export default {
       newMessage: '',
       isEmpty: true,
       response: false,
+      textareaHeight: '40px',
+      initialHeight: '40px',
     }
   },
   methods: {
     scrollToBottom() {
       this.$refs.chatContainer.scrollTop = this.$refs.chatContainer.scrollHeight;
     },
+    inputHandler(e) {
+      if (e.keyCode === 13 && !e.shiftKey) {
+        e.preventDefault();
+        this.addMessage();
+      }
+    },
     async addMessage() {
+      this.textareaHeight = this.initialHeight;
       let msg = { 
         is_bot: false,
         avatar: 'https://picsum.photos/200',
         text: this.newMessage,
       }
       this.messages.push(msg);
-       
+      this.newMessage = '';
       this.response = true
       const res = await axios.get('http://ip.jsontest.com/')
       this.response = false
@@ -71,8 +89,16 @@ export default {
         text: res.data,
       });
 
-      this.newMessage = '';
       this.scrollToBottom();
+    },
+    updateTextareaHeight(event) {
+      const textarea = event.target;
+      if (!this.initialHeight) {
+        this.initialHeight = textarea.style.height;
+      }
+      textarea.style.height = '40px';
+      textarea.style.height = `${textarea.scrollHeight}px`;
+      this.textareaHeight = textarea.style.height;
     },
   },
   mounted() {
@@ -110,6 +136,8 @@ export default {
     padding-top: 10px;
     border: 1px solid black;
     height: 92%;
+    display: flex;
+    flex-direction: column;
   }
   .chat-header {
     background-color: #0084ff;
@@ -165,6 +193,7 @@ export default {
   .message.received .message-text {
     border-bottom-left-radius: 0;
     background-color: #e3e4ecb5;
+    width: fit-content;
   }
 
   .message.received .avatar-container {
@@ -236,19 +265,20 @@ export default {
   .conversation {
     display: flex;
     flex-direction: column;
-    height: 87%;
     overflow-y: auto;
     margin-bottom: 1rem;
+    flex-grow: 1;
   }
   /* Message form */
   .message-form {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    height: 20%;
     padding-left: 10px;
     padding-right: 10px;
     background-color: #fff;
+    height: fit-content;
+    
   }
 
   .message-form textarea {
@@ -256,13 +286,14 @@ export default {
     border: none;
     outline: none;
     font-size: 1rem;
-    padding: 2px 10px;
+    padding: 8px 10px;
     margin-right: 1rem;
     border-radius: 1rem;
     box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
-    margin-bottom: 24px;
-  }
+    margin-bottom: 10px;
+    max-height: 150px;
 
+  }
   .message-form button[type="submit"] {
     background-color: #0084ff;
     border: none;
@@ -271,13 +302,15 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 2.5rem;
-    width: 2.5rem;
+    height: 30px;
+    width: 30px;
     border-radius: 50%;
     cursor: pointer;
-    margin-bottom: 24px;
+    margin-bottom: 10px;
   }
-
+  .message-form button[type="submit"] i {
+    font-size: 16px;
+  }
   .message-form button[type="submit"]:hover {
     background-color: #0073e6;
   }
