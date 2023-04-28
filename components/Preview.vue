@@ -13,6 +13,7 @@
 
 <script>
 import plantumlEncoder from "plantuml-encoder";
+import { saveAs } from 'file-saver';
 import { useMessageStore } from "../store/message"
 
 export default {
@@ -54,7 +55,9 @@ export default {
       return plantumlEncoder.encode(text);
     },
     async download() {
-
+      const svgString = document.querySelector('.previewSvg svg').outerHTML; 
+      const blob = new Blob([svgString], { type: 'image/svg+xml' });
+      saveAs(blob, 'my-svg-file.svg'); 
     }
   },
   updated() {

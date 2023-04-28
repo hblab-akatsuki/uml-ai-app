@@ -29,20 +29,22 @@ import { useMessageStore } from "../store/message"
 
 export default {
   data() {
-    let codeStore = useMessageStore();
     return {
-      codeUml: codeStore.code,
+      codeUml: useMessageStore().code,
     }
   },
   methods: {
     updateData(value) {
-      let codeStore = useMessageStore();
-      codeStore.addCode(value)
+      if (value != null) {
+        useMessageStore().code = value
+      }
     }
   },
-  updated() {
-    let codeStore = useMessageStore();
-  }
+  mounted() {
+    this.$nuxt.$on('select-room', (codeUml) => {
+      this.codeUml = codeUml;
+    })
+  },
 }
 </script>
 

@@ -12,6 +12,7 @@
     <div class="history-chat overflow-hidden hover:overflow-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
       <div v-for="chatRoom in chatRooms" :key="chatRoom.id" @click="getMessageRoom(chatRoom.id)"
         class="p-1 mt-3 flex items-center rounded-md max-w-[220px] px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white"
+        :class = "{ 'bg-gray-500': chatRoom.id === room_id }"
       >
         <i class="fa fa-comment"></i>
         <span class="text-[15px] ml-4 text-gray-200 font-bold break-word truncate">{{ chatRoom.title }}</span>
@@ -30,7 +31,8 @@ export default ({
   },
   data() {
     return {
-      chatRooms: useMessageStore().rooms
+      chatRooms: useMessageStore().rooms,
+      room_id: null
     }
   },
   methods: {
@@ -46,19 +48,19 @@ export default ({
       messageStore.room_id = null;
     },
     async getRoomChatId() {
-      const res = await axios.get('http://172.16.11.157/chat-uml-api/public/api/rooms')
+      const res = await axios.get('https://uml-ai-api.socoladaica.com/api/rooms')
       res.data.forEach(item => {
         useMessageStore().addRoom(
           item.id,
           item.title
         )
       })
-      // this.chatRooms = res.data;
     },
     async getMessageRoom(roomId) {
-      const messageRoom = await axios.get(`http://172.16.11.157/chat-uml-api/public/api/rooms/${roomId}/messages`)
-      console.log(messageRoom)
-      useMessageStore().code = messageRoom.data.planuml;
+      const messageRoom = await axios.get(`https://uml-ai-api.socoladaica.com/api/rooms/${roomId}/messages`)
+      this.room_id = roomId
+      useMessageStore().code = messageRoom.data.plantuml;
+      useMessageStore().clearMessage();
       messageRoom.data.chats.forEach(item => {
         useMessageStore().addMessage(
           item.role == 2,

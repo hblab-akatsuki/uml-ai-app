@@ -82,7 +82,7 @@ export default {
       this.newMessage = '';
       this.response = true
       const res = await axios.post(
-        'http://172.16.11.157/chat-uml-api/public/api/messages',
+        'https://uml-ai-api.socoladaica.com/api/messages',
         {
           "room_id": useMessageStore().room_id,
           "message": msg.text
@@ -90,17 +90,17 @@ export default {
       )
       if (useMessageStore().room_id == null) {
         useMessageStore().rooms.unshift({
-          id: res.data.message.room_id,
-          title: res.data.message.title
+          id: res.data.id,
+          title: res.data.title
         })
       }
-      useMessageStore().code = res.data.planuml;
-      useMessageStore().room_id = res.data.message.room_id;
+      useMessageStore().code = res.data.plantuml;
+      useMessageStore().room_id = res.data.id;
       this.response = false
       this.messages.push({ 
         is_bot: true,
         avatar: 'https://picsum.photos/200',
-        text: res.data.message.message,
+        text: res.data.chats[1].message,
       });
 
       this.scrollToBottom();

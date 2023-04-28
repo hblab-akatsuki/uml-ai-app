@@ -30,7 +30,7 @@ import Sidebar from '../components/Sidebar'
 import Preview from '../components/Preview.vue'
 import Editor from '../components/Editor.vue'
 import { useMessageStore } from "../store/message"
-
+import axios from 'axios';
 
 
 export default {
@@ -39,16 +39,21 @@ export default {
   data() {
     return {
       isChat: true,
-      // codeData: text
     }
   },
   methods: {
-    changeMode(e) {
+    async changeMode(e) {
       this.isChat = e;
+      if (this.isChat && useMessageStore().room_id != null) {
+        const res = await axios.post(
+          'https://uml-ai-api.socoladaica.com/api/messages',
+          {
+            "room_id": useMessageStore().room_id,
+            "plantuml": useMessageStore().code
+          }
+        )
+      } 
     },
-    // updateCode(e) {
-    //   this.codeData = e;
-    // }
   },
   mounted() {
     const messageStore = useMessageStore()
