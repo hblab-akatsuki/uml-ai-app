@@ -13,34 +13,39 @@
 
 <script>
 import plantumlEncoder from "plantuml-encoder";
+import { useMessageStore } from "../store/message"
 
 export default {
-  props: {
-    data: {
-      required: false
-    }
-  },
   data() {
+    let codeStore = useMessageStore();
     return {
       html: '',
+      codeUml: codeStore.code
     }
   },
   mounted() {
-    this.getSvgData(this.data)
+    this.getSvgData(this.codeUml)
     const element = this.$refs.myElement
-    const instance = this.$panzoom(element, {
+    this.$panzoom(element, {
       minZoom: 0.5, 
       maxZoom: 1.25
     })
+
+    this.$nuxt.$on('select-room', (codeUml) => {
+      this.getSvgData(codeUml);
+    })
   },
   watch: {
-    data: function (newQuestion, oldQuestion) {
-      this.getSvgData(newQuestion)
+    codeStore: {
+      handler: function (val, oldVal) {
+        this.getSvgData(val);
+      },
+      deep: true
     }
   },
   methods: {
     async getSvgData(text, type = 'svg') {
-      const encode = this.encode(text)
+      const encode = this.encode(text || '');
       const url = `http://www.plantuml.com/plantuml/${type}/${encode}`;
       const response = await fetch(url)
       this.html = await response.text()
@@ -51,7 +56,18 @@ export default {
     async download() {
 
     }
-  }
+  },
+  updated() {
+    let codeStore = useMessageStore();
+
+    this.getSvgData(codeStore.code)
+
+    const element = this.$refs.myElement
+    this.$panzoom(element, {
+      minZoom: 0.5, 
+      maxZoom: 1.25
+    })
+  },
 }
 </script>
 <style>

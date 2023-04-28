@@ -28,7 +28,7 @@
       </div>
       <form class="message-form" @submit.prevent="addMessage">
         <textarea 
-          autocomplete="off"
+          autocomplete="nope"
           v-model.trim="newMessage"
           class="resize-none"
           :style="{ height: textareaHeight }"
@@ -51,7 +51,7 @@ import { useMessageStore } from "../store/message"
 
 export default {
   data() {
-    const messageStore = useMessageStore()
+    let messageStore = useMessageStore()
     return {
       messages: messageStore.messages,
       newMessage: '',
@@ -81,12 +81,26 @@ export default {
       this.messages.push(msg);
       this.newMessage = '';
       this.response = true
-      const res = await axios.get('http://ip.jsontest.com/')
+      const res = await axios.post(
+        'http://172.16.11.157/chat-uml-api/public/api/messages',
+        {
+          "room_id": useMessageStore().room_id,
+          "message": msg.text
+        }
+      )
+      if (useMessageStore().room_id == null) {
+        useMessageStore().rooms.unshift({
+          id: res.data.message.room_id,
+          title: res.data.message.title
+        })
+      }
+      useMessageStore().code = res.data.planuml;
+      useMessageStore().room_id = res.data.message.room_id;
       this.response = false
       this.messages.push({ 
         is_bot: true,
         avatar: 'https://picsum.photos/200',
-        text: res.data,
+        text: res.data.message.message,
       });
 
       this.scrollToBottom();

@@ -8,7 +8,7 @@
         <client-only>
           <CodeEditor 
             :copy_code="true" 
-            :value="data"
+            :value="codeUml"
             @input="updateData($event)"
             :language_selector="false" 
             border_radius="none"
@@ -25,16 +25,23 @@
   </div>
 </template>
 <script>
+import { useMessageStore } from "../store/message"
+
 export default {
-  props: {
-    data: {
-      required: false
+  data() {
+    let codeStore = useMessageStore();
+    return {
+      codeUml: codeStore.code,
     }
   },
   methods: {
     updateData(value) {
-      this.$emit('updateCode', value)
+      let codeStore = useMessageStore();
+      codeStore.addCode(value)
     }
+  },
+  updated() {
+    let codeStore = useMessageStore();
   }
 }
 </script>

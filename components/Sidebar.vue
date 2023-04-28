@@ -10,89 +10,77 @@
 			<span class="text-[15px] ml-4 text-gray-200 font-bold">New Chat</span>
 		</div>
     <div class="history-chat overflow-hidden hover:overflow-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
-        <div v-for="(chat, index) in chats" :key="`${index}chat`"
+      <div v-for="chatRoom in chatRooms" :key="chatRoom.id" @click="getMessageRoom(chatRoom.id)"
         class="p-1 mt-3 flex items-center rounded-md max-w-[220px] px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white"
       >
-      <i class="fa fa-comment"></i>
-        <span class="text-[15px] ml-4 text-gray-200 font-bold break-word truncate">{{ chat.title }}</span>
+        <i class="fa fa-comment"></i>
+        <span class="text-[15px] ml-4 text-gray-200 font-bold break-word truncate">{{ chatRoom.title }}</span>
       </div>
     </div>
 		
 	</div>
 </template>
 <script>
-
+import axios from 'axios';
 import { useMessageStore } from "../store/message"
+
 export default ({
+  created() {
+    this.getRoomChatId()
+  },
   data() {
-    let id = 0
     return {
-      chats: [
-        {
-          id: ++id,
-          title: 'Hey, how are you? Hey, how are you?',
-        },
-        {
-          id: ++id,
-          title: 'Hey, how are you?',
-        },
-        {
-          id: ++id,
-          title: 'Hey, how are you?',
-        },
-        {
-          id: ++id,
-          title: 'Hey, how are you?',
-        },
-        {
-          id: ++id,
-          title: 'Hey, how are you?',
-        },
-        {
-          id: ++id,
-          title: 'Hey, how are you?',
-        },
-        {
-          id: ++id,
-          title: 'Hey, how are you?',
-        },
-        {
-          id: ++id,
-          title: 'Hey, how are you?',
-        },
-        {
-          id: ++id,
-          title: 'Hey, how are you?',
-        },
-        {
-          id: ++id,
-          title: 'Hey, how are you?',
-        },
-        {
-          id: ++id,
-          title: 'Hey, how are you?',
-        },
-        {
-          id: ++id,
-          title: 'Hey, how are you?',
-        },
-        {
-          id: ++id,
-          title: 'Hey, how are you?',
-        },
-      ],
+      chatRooms: useMessageStore().rooms
     }
   },
   methods: {
     addChat()  {
-      const messageStore = useMessageStore();
+      let messageStore = useMessageStore();
       messageStore.clearMessage();
       messageStore.addMessage(
         true,
         'https://picsum.photos/200',
         'Hello, I am a ChatGPT!'
       )
+      messageStore.code = '';
+      messageStore.room_id = null;
     },
+    async getRoomChatId() {
+      const res = await axios.get('http://172.16.11.157/chat-uml-api/public/api/rooms')
+      res.data.forEach(item => {
+        useMessageStore().addRoom(
+          item.id,
+          item.title
+        )
+      })
+      // this.chatRooms = res.data;
+    },
+    async getMessageRoom(roomId) {
+      const messageRoom = await axios.get(`http://172.16.11.157/chat-uml-api/public/api/rooms/${roomId}/messages`)
+      console.log(messageRoom)
+      useMessageStore().code = messageRoom.data.planuml;
+      messageRoom.data.chats.forEach(item => {
+        useMessageStore().addMessage(
+          item.role == 2,
+          'https://picsum.photos/200',
+          item.message
+        )
+      })
+      useMessageStore().room_id = messageRoom.data.id;
+    }
+  },
+  computed: {
+    useMessageStoreCode: function() {
+      return useMessageStore().code;
+    }
+  },
+  watch: {
+    useMessageStoreCode: {
+      handler: function (val, oldVal) {
+        $nuxt.$emit('select-room', val);
+      },
+      deep: true
+    }
   },
 });
 </script>
