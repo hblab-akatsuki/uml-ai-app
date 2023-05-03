@@ -45,7 +45,7 @@ export default {
   margin-top: 10px;
   margin-left: 20px;
   width: 150px;
-  height: 50px;
+  //height: 50px;
 }
 .box {
   text-align: center;

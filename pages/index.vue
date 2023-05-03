@@ -60,7 +60,7 @@ export default {
     messageStore.addMessage(
       true,
       'https://picsum.photos/200',
-      'Hello, I am a ChatGPT!'
+      'Hello! I am UML AI, I will help you create diagram.'
     )
   },
 }
@@ -73,12 +73,14 @@ body {
 }
 
 .options {
-  height: 10vh;
+  //height: 10vh;
+  //height: 85px;
+  padding-bottom: 10px;
   background-color: #c2aeae2e;
 }
 
 .grid-content {
-  height: 90vh;
+  height: calc(100vh - 68px);
 }
 
 .chat-form {
