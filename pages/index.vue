@@ -52,7 +52,7 @@ export default {
             "plantuml": useMessageStore().code
           }
         )
-      } 
+      }
     },
   },
   mounted() {
