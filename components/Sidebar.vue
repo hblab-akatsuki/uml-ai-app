@@ -1,11 +1,12 @@
 <template>
-	<div 
+	<div
     class="sidebar bottom-0 lg:left-0 p-1 w-[250px] text-center bg-gray-900"
   >
 		<div
       @click="addChat"
-      class="new-chat p-2.5 mt-3 flex items-center rounded-md px-4 max-w-[220px] bg-slate-400 duration-300 cursor-pointer hover:bg-blue-600 text-white"
+      class="new-chat flex items-center bg-slate-400 p-2.5 m-2.5 cursor-pointer hover:bg-blue-600 text-white duration-300"
     >
+<!--      "  mt-3  rounded-md px-4 max-w-[220px]  -->
 			<i class="fa fa-plus"></i>
 			<span class="text-[15px] ml-4 text-gray-200 font-bold">New Chat</span>
 		</div>
@@ -18,7 +19,7 @@
         <span class="text-[15px] ml-4 text-gray-200 font-bold break-word truncate">{{ chatRoom.title }}</span>
       </div>
     </div>
-		
+
 	</div>
 </template>
 <script>
@@ -42,7 +43,7 @@ export default ({
       messageStore.addMessage(
         true,
         'https://picsum.photos/200',
-        'Hello, I am a ChatGPT!'
+        'Hello! I am UML AI, I will help you create diagram.'
       )
       messageStore.code = '';
       messageStore.room_id = null;
@@ -91,7 +92,7 @@ export default ({
 		height: 100%;
 	}
   .new-chat {
-    height: 8%
+    height: 40px;
   }
   .history-chat {
     height: 92%
